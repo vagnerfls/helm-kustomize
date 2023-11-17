@@ -1,0 +1,62 @@
+{{- if .Values.backend.enabled -}}
+{{ $name := .Release.Name | trimSuffix "-hom" | trimSuffix "-int" | trimSuffix "-prd"}}
+{{- $name := printf "%s-backend" $name -}}
+
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: {{ $name }}
+
+  annotations:
+    image.openshift.io/triggers: |
+      [
+        {"from":
+          {"kind":"ImageStreamTag"
+            , "name":"{{ $name }}:latest"
+          }
+          , "fieldPath":"spec.template.spec.containers[?(@.name==\"{{ $name }}\")].image"
+        }
+      ]
+
+spec:
+  replicas: {{ .Values.backend.replicas }}
+  selector:
+    matchLabels:
+      app: {{ $name }}
+  template:
+    metadata:
+      labels:
+        app: {{ $name }}
+    spec:
+      containers:
+        - name: {{ $name }}
+          image: {{ $name }}:latest
+          ports:
+            - containerPort: {{ .Values.backend.containerPort }}
+              protocol: TCP
+              name: http
+          resources:
+            limits:
+              cpu: {{ .Values.backend.cpuLimit }}
+              memory: {{ .Values.backend.memoryLimit }}
+            requests:
+              cpu: {{ .Values.backend.cpuRequest }}
+              memory: {{ .Values.backend.memoryRequest }}
+          
+          env: 
+            {{- toYaml .Values.backend.env | nindent 12 }}
+
+          {{ if .Values.secrets }}
+          {{ range $secret := .Values.secrets }}
+          envFrom:
+            secretGenerator:
+              - name: {{ $secret.name }}
+          {{ end }}
+          {{ end }}
+
+          livenessProbe:
+            {{- toYaml .Values.backend.livenessProbe | nindent 12}}
+          readinessProbe:
+            {{- toYaml .Values.backend.readinessProbe | nindent 12}}
+
+{{- end -}}

@@ -1,0 +1,16 @@
+{{ $name := .Release.Name | trimSuffix "-hom" | trimSuffix "-int" | trimSuffix "-prd"}}
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+
+metadata:
+  name: guest
+
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: guest
+subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: Group
+    name: G_{{ $name | upper }}
