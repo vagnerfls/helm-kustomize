@@ -1,0 +1,72 @@
+# DEFINIR VALORES PARA A CAMADA BACKEND #
+
+backend:
+  enabled: true             # Deve ser habilitado se o projeto contér a chamada frontend
+  replicas: 1               # Quantidade de pods que rodará a aplicação
+  containerPort: 8080       # Porta default para todos projetos
+  cpuLimit: 600m            # Limite de CPU que um pod, pode utilizar. (valor default)
+  cpuRequest: 300m          # Solicitação inicial de CPU para o pod. (valor default)
+  memoryLimit: 512Mi        # Limite de RAM que um pod, pode utilizar. (valor default) 
+  memoryRequest: 384Mi      # Solicitação inicial de RAM para o pod. (valor default)
+  route: true               # Dever ser habilitado quando for utilizar rota para a camada.
+  imageStream: true         # Dever ser habilitado quando for utilizar imagestream para a camada.
+  
+  
+# DEFINIR VARIAVEIS DE AMBIENTE
+  
+  env:
+    - name: env
+      value: >-
+        TZ=America/Recife
+        SPRING_PROFILES_ACTIVE=int
+
+# PROBES (VALORES DEFAULT)
+
+  livenessProbe:
+    initialDelaySeconds: 105
+    httpGet:
+      path: /actuator/health/liveness
+      port: http
+
+  readinessProbe:
+    initialDelaySeconds: 105
+    httpGet:
+      path: /actuator/health/readiness
+      port: http
+
+# DEFINIR VARIAVEIS COM VALORES SECRETOS
+
+secrets:
+  - name: dbsource
+    keys:
+      - name: DB_APP_URL
+        value: "jdbc:exemplo"
+        encoded: false
+      - name: DB_APP_USER
+        value: "exemplo"
+        encoded: false
+      - name: DB_APP_PASS
+        value: "exemplo"  
+
+# DEFINIR VALORES PARA A CAMADA FRONTEND #
+
+frontend:
+  enabled: true           # Deve ser habilitado se o projeto contér a chamada frontend
+  replicas: 1             # Quantidade de pods que rodará a aplicação
+  containerPort: 8080     # Porta default para todos projetos
+  cpuLimit: 10m           # Limite de CPU que um pod, pode utilizar. (valor default)
+  cpuRequest: 10m         # Solicitação inicial de CPU para o pod. (valor default)
+  memoryRequest: 32Mi     # Solicitação inicial de RAM para o pod. (valor default)
+  memoryLimit: 32Mi       # Limite de RAM que um pod, pode utilizar. (valor default)
+  route: true             # Dever ser habilitado quando for utilizar rota para a camada.
+  imageStream: true       # Dever ser habilitado quando for utilizar imagestream para a camada.
+
+
+# DEFINIR VALORES LIMITES DE RECURSOS QUE POSSAM SER UTILIZADOS PELO GRUPO DEVELOPER #
+
+quota:
+  pods: '5'
+  cpuRequest: 1500m
+  cpuLimit: 1500m
+  memoryRequest: 1500Mi
+  memoryLimit: 1500Mi
