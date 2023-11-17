@@ -11,8 +11,8 @@ spec:
   selector:
     app: {{ $name }}
   ports:
-  - name: http
-    port: {{ .Values.frontend.containerPort }}
-    targetPort: http
+    - name: http
+      port: {{ .Values.frontend.containerPort }}
+      targetPort: http
 
 {{- end -}}
