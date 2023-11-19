@@ -43,16 +43,16 @@ spec:
               cpu: {{ .Values.backend.cpuRequest }}
               memory: {{ .Values.backend.memoryRequest }}
           
-#          env: 
-#            {{- toYaml .Values.backend.env | nindent 12 }}
+          env: 
+            {{- toYaml .Values.backend.env | nindent 12 }}
 
-#          {{ if .Values.secrets }}
-#          {{ range $secret := .Values.secrets }}
-#          envFrom:
-#            secretGenerator:
-#              - name: {{ $secret.name }}
-#          {{ end }}
-#          {{ end }}
+          {{ if .Values.secrets }}
+          {{ range $secret := .Values.secrets }}
+          envFrom:
+            secretGenerator:
+              - name: {{ $secret.name }}
+          {{ end }}
+          {{ end }}
 
           livenessProbe:
             {{- toYaml .Values.backend.livenessProbe | nindent 12}}
