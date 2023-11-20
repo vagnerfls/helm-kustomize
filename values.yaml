@@ -18,7 +18,6 @@ backend:
     - name: env
       value: >-
         TZ=America/Recife
-        SPRING_PROFILES_ACTIVE=int
 
 # PROBES (VALORES DEFAULT)
 
