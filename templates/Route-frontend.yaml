@@ -8,7 +8,7 @@ metadata:
   name: {{ $name }}
 
 spec:
-  host: hom-{{ $name }}.apps.ocp.sefaz.pe.gov.br
+  host: {{$Ambiente}}-{{ $name }}.apps.ocp.sefaz.pe.gov.br
   to:
     kind: Service
     name: {{ $name }}
