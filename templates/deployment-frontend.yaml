@@ -22,7 +22,7 @@ spec:
       volumes:
         - name: site
           configMap:
-            name: site-^[a-z0-9]{10}$
+            name: site-*
         - name: {{ $name }}
           image: registry.access.redhat.com/ubi9/nginx-122
           command: ["nginx", "-g", "daemon off;"]          
