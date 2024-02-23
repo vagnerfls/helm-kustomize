@@ -24,6 +24,7 @@ spec:
           configMap:
             name: site
             trimSuffix: true
+      containers:
         - name: {{ $name }}
           image: registry.access.redhat.com/ubi9/nginx-122
           command: ["nginx", "-g", "daemon off;"]          
