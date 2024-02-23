@@ -1,1 +1,0 @@
-https://github.com/fluxcd/flux2-kustomize-helm-example/blob/main/apps/base/podinfo/release.yaml
