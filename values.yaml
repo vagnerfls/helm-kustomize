@@ -1,10 +1,11 @@
-# DEFINIR VALORES PARA A CAMADA BACKEND #
+# DEFINIR VALORES PARA A CAMADA FRONTEND #
 
-backend:
-  enabled: true             # Deve ser habilitado se o projeto contér a chamada frontend
-  replicas: 1               # Quantidade de pods que rodará a aplicação
-  containerPort: 8080       # Porta default para todos projetos
-  cpuLimit: 600m            # Limite de CPU que um pod, pode utilizar. (valor default)
-  cpuRequest: 300m          # Solicitação inicial de CPU para o pod. (valor default)
-  memoryLimit: 512Mi        # Limite de RAM que um pod, pode utilizar. (valor default) 
-  memoryRequest: 384Mi      # Solicitação inicial de RAM para o pod. (valor default)
+frontend:
+  enabled: true           # Deve ser habilitado se o projeto contér a chamada frontend
+  replicas: 1             # Quantidade de pods que rodará a aplicação
+  containerPort: 8080     # Porta default para todos projetos
+  cpuLimit: 10m           # Limite de CPU que um pod, pode utilizar. (valor default)
+  cpuRequest: 10m         # Solicitação inicial de CPU para o pod. (valor default)
+  memoryRequest: 32Mi     # Solicitação inicial de RAM para o pod. (valor default)
+  memoryLimit: 32Mi       # Limite de RAM que um pod, pode utilizar. (valor default)
+  route: true             # Dever ser habilitado quando for utilizar rota para a camada.

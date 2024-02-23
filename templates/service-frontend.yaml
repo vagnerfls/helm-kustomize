@@ -1,6 +1,6 @@
-{{- if .Values.backend.enabled -}}
+{{- if .Values.frontend.enabled -}}
 {{ $name := .Release.Name | trimSuffix "-hom" | trimSuffix "-int" | trimSuffix "-prd"}}
-{{- $name := printf "%s-backend" $name -}}
+{{- $name := printf "%s-frontend" $name -}}
 
 apiVersion: v1
 kind: Service
@@ -11,8 +11,8 @@ spec:
   selector:
     app: {{ $name }}
   ports:
-  - name: http
-    port: {{ .Values.backend.containerPort }}
-    targetPort: http
+    - name: http
+      port: {{ .Values.frontend.containerPort }}
+      targetPort: http
 
 {{- end -}}

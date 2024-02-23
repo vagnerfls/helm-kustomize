@@ -1,0 +1,49 @@
+{{- if .Values.frontend.enabled -}}
+{{ $name := .Release.Name | trimSuffix "-hom" | trimSuffix "-int" | trimSuffix "-prd"}}
+{{- $name := printf "%s-frontend" $name -}}
+
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: {{ $name }}
+
+spec:
+  replicas: {{ .Values.frontend.replicas }}
+  selector:
+    matchLabels:
+      app: {{ $name }}
+  template:
+    metadata:
+      labels:
+        app: {{ $name }}
+    spec:
+      containers:
+        - name: {{ $name }}
+          image: nginx:latest
+          ports:
+            - containerPort: {{ .Values.frontend.containerPort }}
+              protocol: TCP
+              name: http
+          resources:
+            limits:
+              cpu: {{ .Values.frontend.cpuLimit }}
+              memory: {{ .Values.frontend.memoryLimit }}
+            requests:
+              cpu: {{ .Values.frontend.cpuRequest }}
+              memory: {{ .Values.frontend.memoryRequest }}
+
+            livenessProbe:
+              httpGet:
+                path: /{{ $name }}/
+                port: 8080
+              initialDelaySeconds: 3
+              periodSeconds: 3
+            readinessProbe:
+              httpGet:
+                path: /{{ $name }}/
+                port: 8080
+              initialDelaySeconds: 3
+              periodSeconds: 3
+
+
+{{- end -}}
