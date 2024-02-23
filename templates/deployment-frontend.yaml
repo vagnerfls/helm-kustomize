@@ -1,7 +1,7 @@
 {{- if .Values.frontend.enabled -}}
 {{ $name := .Release.Name | trimSuffix "-hom" | trimSuffix "-int" | trimSuffix "-prd"}}
 {{- $name := printf "%s-frontend" $name -}}
-{{ $hash := ^[a-z0-9]{10}$ -}}
+{{ $hash :=  -}}
 
 
 kind: Deployment
@@ -22,7 +22,7 @@ spec:
       volumes:
         - name: site
           configMap:
-            name: site-{{ $hash }}
+            name: site-^[a-z0-9]{10}$
         - name: {{ $name }}
           image: registry.access.redhat.com/ubi9/nginx-122
           command: ["nginx", "-g", "daemon off;"]          
