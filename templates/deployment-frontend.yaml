@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: {{ $name }}
-          image: nginx:latest
+          image: registry.access.redhat.com/ubi9/nginx-122
           ports:
             - containerPort: {{ .Values.frontend.containerPort }}
               protocol: TCP
