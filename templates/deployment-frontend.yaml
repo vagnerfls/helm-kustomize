@@ -1,6 +1,8 @@
 {{- if .Values.frontend.enabled -}}
 {{ $name := .Release.Name | trimSuffix "-hom" | trimSuffix "-int" | trimSuffix "-prd"}}
 {{- $name := printf "%s-frontend" $name -}}
+{{ $hash := -}}
+
 
 kind: Deployment
 apiVersion: apps/v1
@@ -20,7 +22,7 @@ spec:
       volumes:
         - name: site
           configMap:
-            name: site
+            name: site-{{ $hash }}
       containers:
         - name: {{ $name }}
           image: registry.access.redhat.com/ubi9/nginx-122
