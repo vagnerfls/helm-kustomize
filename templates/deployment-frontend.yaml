@@ -33,18 +33,4 @@ spec:
               cpu: {{ .Values.frontend.cpuRequest }}
               memory: {{ .Values.frontend.memoryRequest }}
 
-            livenessProbe:
-              httpGet:
-                path: /{{ $name }}/
-                port: 8080
-              initialDelaySeconds: 3
-              periodSeconds: 3
-            readinessProbe:
-              httpGet:
-                path: /{{ $name }}/
-                port: 8080
-              initialDelaySeconds: 3
-              periodSeconds: 3
-
-
 {{- end -}}
