@@ -1,7 +1,7 @@
 {{- if .Values.frontend.enabled -}}
 {{ $name := .Release.Name | trimSuffix "-hom" | trimSuffix "-int" | trimSuffix "-prd"}}
 {{- $name := printf "%s-frontend" $name -}}
-{{ $hash := -}}
+{{ $hash := randAlphaNum 10 -}}
 
 
 kind: Deployment
