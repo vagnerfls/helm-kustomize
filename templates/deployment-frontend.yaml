@@ -22,7 +22,8 @@ spec:
       volumes:
         - name: site
           configMap:
-            name: site-*
+            name: site
+            trimSuffix: true
         - name: {{ $name }}
           image: registry.access.redhat.com/ubi9/nginx-122
           command: ["nginx", "-g", "daemon off;"]          
