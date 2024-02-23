@@ -17,6 +17,10 @@ spec:
       labels:
         app: {{ $name }}
     spec:
+      volumes:
+        - name: site
+          configMap:
+            name: site
       containers:
         - name: {{ $name }}
           image: registry.access.redhat.com/ubi9/nginx-122
@@ -32,5 +36,7 @@ spec:
             requests:
               cpu: {{ .Values.frontend.cpuRequest }}
               memory: {{ .Values.frontend.memoryRequest }}
-
+          volumeMounts:
+            - name: site
+              mountPath: /
 {{- end -}}
